@@ -1,0 +1,68 @@
+<?
+// error_reporting(0);	// error tidak ditampilkan
+error_reporting(1);		// error ditampilkan
+
+header('Content-Type: text/xml; charset=UTF-8');
+include "koneksi.php";
+
+// fungsi menghapus selain huruf dan angka
+function filter($data)
+{	$data = preg_replace('/[^a-zA-Z0-9]/', '', $data);
+	return $data;
+	unset($data);
+}
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST')
+{	$input = file_get_contents("php://input");
+	$data = xmlrpc_decode($input);
+
+	$nim = $data[0]['nim'];
+	$nama = $data[0]['nama'];
+	$aksi = $data[0]['aksi'];
+	
+	if ($aksi == 'tambah-data')
+	{	$query = $conn->prepare("insert ignore into mahasiswa (nim,nama) values (?,?) ");
+		$query->execute(array($nim,$nama));		
+	} elseif ($aksi == 'ubah-data') 
+	{	$query = $conn->prepare("update mahasiswa set nama = ? where nim = ? ");
+		$query->execute(array($nama,$nim));	
+	} elseif ($aksi == 'hapus-data') 
+	{	$query = $conn->prepare("delete from mahasiswa where nim = ? ");
+		$query->execute(array($nim));	
+	}
+
+	$query->closeCursor(); 
+	unset($input,$data,$nim,$nama,$aksi);
+
+} elseif ($_SERVER['REQUEST_METHOD'] == 'GET') 
+{	if ( ($_GET['aksi']=='lihat-data') and (isset($_GET['nim'])) )
+	{	$nim = filter($_GET['nim']);	
+		$query = $conn->prepare("select nim, nama from mahasiswa where nim = ? ");
+		$query->execute(array($nim));	
+
+		// mengambil satu data dengan fetch	
+		$data=$query->fetch(PDO::FETCH_ASSOC);
+
+		$xml = xmlrpc_encode($data);
+	    echo $xml;	
+
+	} else 
+	{	$query = $conn->prepare("select nim, nama from mahasiswa order by nim");
+		$query->execute();	
+
+		// mengambil banyak data dengan fetchAll	
+		$data = $query->fetchAll(PDO::FETCH_ASSOC);	
+
+		$xml = xmlrpc_encode($data);
+	    echo $xml;		     
+	}
+
+	//echo "<pre>";
+	//print_r($data);
+	//echo "</pre>";
+
+	$query->closeCursor();
+	unset($xml,$nim,$data);		
+}
+
+?>
