@@ -113,7 +113,6 @@ if ($_SERVER['REQUEST_METHOD']=='POST' && $data->aksi=='login' && isset($data->i
         echo json_encode(array("pesan" => "Token tidak valid atau kadaluarsa"));
     }
 
-// === AKSI GET (tampil semua / tampil satu) ===
 } elseif ($_SERVER['REQUEST_METHOD']=='GET') {
     $jwt = $_GET['jwt']; 
 

@@ -63,7 +63,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	unset($postdata, $data, $data2, $nim, $nama, $no_hp, $email, $alamat, $aksi, $abc);
 }
 
-// ==== METHOD GET ====
 elseif ($_SERVER['REQUEST_METHOD'] == 'GET') {
 	if (isset($_GET['aksi']) && $_GET['aksi'] == 'tampil' && isset($_GET['nim'])) {
 		$nim = $abc->filter($_GET['nim']);

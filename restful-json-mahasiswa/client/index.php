@@ -28,7 +28,7 @@ $page = isset($_GET['page']) ? $_GET['page'] : 'home';
 
 	<div class="container">
 		<fieldset>
-																																																																																										 
+
 			<?php
 			if ($page == 'tambah') { ?>
 				<legend>Tambah Data Mahasiswa</legend>
@@ -154,14 +154,13 @@ $page = isset($_GET['page']) ? $_GET['page'] : 'home';
 
 				<table class="table table-hover">
 					<tr>
-						<th>No</th>
-						<th>NIM</th>
-						<th>Nama</th>
-						<th>No. HP</th>
-						<th>Email</th>
-						<th>Alamat</th>
-						<th>Ubah</th>
-						<th>Hapus</th>
+						<th width='15%'>No</th>
+						<th width='10%'>NIM</th>
+						<th width='30%'>Nama</th>
+						<th width='15%'>No. HP</th>
+						<th width='15%'>Email</th>
+						<th width='10%'>Alamat</th>
+						<th width='10%'>Aksi</th>
 					</tr>
 					<?php
 					$no = 1;

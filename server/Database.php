@@ -21,7 +21,7 @@ class Database
 
     public function login($data)
     {
-        $query = $this->conn->prepare("select id_pengguna,nama from pengguna where id_pengguna=? and pin=MD5(?)");
+        $query = $this->conn->prepare("select id_pengguna,nama from pengguna where id_pengguna=? and pin=?");
         $query->execute(array($data['id_pengguna'], $data['pin']));
 
         $data = $query->fetch(PDO::FETCH_ASSOC);

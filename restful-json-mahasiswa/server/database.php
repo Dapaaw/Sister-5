@@ -36,8 +36,9 @@ class Database
 		$query = $this->conn->prepare("SELECT nim, nama, no_hp, email, alamat FROM mahasiswa ORDER BY nim");
 		$query->execute();
 		$data = $query->fetchAll(PDO::FETCH_ASSOC);
-		$query->closeCursor();
 		return $data;
+		$query->closeCursor();
+		unset ($data);
 	}
 
 	// Tampilkan satu data berdasarkan NIM
@@ -80,7 +81,6 @@ class Database
 		unset($data);
 	}
 
-	// Hapus data mahasiswa
 	public function hapus_data($nim)
 	{
 		$query = $this->conn->prepare("DELETE FROM mahasiswa WHERE nim = ?");
