@@ -1,13 +1,12 @@
 <?php
 include "client.php";
-$page = isset($_GET['page']) ? $_GET['page'] : 'home';
 ?>
 <!doctype html>
 <html>
 
 <head>
 	<meta charset="utf-8">
-	<title>RESTful JSON - Mahasiswa</title>
+	<title></title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link href="css/bootstrap.css" rel="stylesheet">
 	<link href="css/bootstrap-responsive.css" rel="stylesheet">
@@ -29,10 +28,9 @@ $page = isset($_GET['page']) ? $_GET['page'] : 'home';
 	<div class="container">
 		<fieldset>
 
-			<?php
-			if ($page == 'tambah') { ?>
-				<legend>Tambah Data Mahasiswa</legend>
-				<div class="row-fluid">
+			<?php if ($_GET['page'] == 'tambah') { ?>
+				<legend>Tambah Data</legend>
+				<div class="row-fluid ">
 					<div class="span8 alert alert-info">
 						<form class="form-horizontal" name="form1" method="POST" action="proses.php" novalidate>
 							<input type="hidden" name="aksi" value="tambah" />
@@ -40,191 +38,154 @@ $page = isset($_GET['page']) ? $_GET['page'] : 'home';
 							<div class="control-group">
 								<label class="control-label" for="nim">NIM</label>
 								<div class="controls">
-									<input type="text" name="nim" class="input-small" placeholder="NIM" required>
+									<input type="text" name="nim" class="input-small" placeholder="NIM" rel="tooltip"
+										data-placement="right" title="Masukkan NIM" required
+										data-validation-required-message="Harus diisi">
 								</div>
 							</div>
 
 							<div class="control-group">
-								<label class="control-label" for="nama">Nama</label>
+								<label class="control-label" for="nama">Nama Mahasiswa</label>
 								<div class="controls">
 									<input type="text" name="nama" class="input-medium" placeholder="Nama Mahasiswa"
-										required>
+										rel="tooltip" data-placement="right" title="Masukkan Nama Mahasiswa" required
+										data-validation-required-message="Harus diisi">
 								</div>
 							</div>
 
 							<div class="control-group">
 								<label class="control-label" for="no_hp">No. HP</label>
 								<div class="controls">
-									<input type="text" name="no_hp" class="input-medium" placeholder="08xxxxxxx" required>
+									<input type="text" name="no_hp" class="input-medium" placeholder="Nomor HP"
+										rel="tooltip" data-placement="right" title="Masukkan Nomor HP" required
+										data-validation-required-message="Harus diisi">
 								</div>
 							</div>
 
 							<div class="control-group">
 								<label class="control-label" for="email">Email</label>
 								<div class="controls">
-									<input type="email" name="email" class="input-medium" placeholder="example@gmail.com"
-										required>
+									<input type="email" name="email" class="input-medium" placeholder="Email" rel="tooltip"
+										data-placement="right" title="Masukkan Email" required
+										data-validation-required-message="Harus diisi">
 								</div>
 							</div>
 
 							<div class="control-group">
 								<label class="control-label" for="alamat">Alamat</label>
 								<div class="controls">
-									<textarea name="alamat" class="input-xlarge" placeholder="Alamat lengkap..."
-										required></textarea>
+									<textarea name="alamat" class="input-large" rows="3" placeholder="Alamat Lengkap"
+										rel="tooltip" data-placement="right" title="Masukkan Alamat" required
+										data-validation-required-message="Harus diisi"></textarea>
 								</div>
 							</div>
 
 							<div class="control-group">
 								<div class="controls">
-									<button type="submit" name="simpan" class="btn btn-primary">
-										<i class="icon-ok icon-white"></i> Simpan
-									</button>
+									<button type="submit" name="simpan" class="btn btn-primary"><i
+											class="icon-ok icon-white"></i> Simpan</button>
 								</div>
 							</div>
 						</form>
 					</div>
 				</div>
 
-			<?php } elseif ($page == 'ubah') {
+			<?php } elseif ($_GET['page'] == 'ubah') {
 				$r = $abc->tampil_data($_GET['nim']);
 				?>
-				<legend>Ubah Data Mahasiswa</legend>
-				<form name="form1" method="post" action="proses.php" class="form-horizontal">
+				<legend>Ubah Data</legend>
+				<form name="form1" method="post" action="proses.php" class="form-inline">
 					<input type="hidden" name="aksi" value="ubah" />
 					<input type="hidden" name="nim" value="<?= $r->nim ?>" />
 
-					<div class="control-group">
-						<label class="control-label">NIM</label>
-						<div class="controls">
-							<input type="text" disabled class="input-small" value="<?= $r->nim ?>">
-						</div>
-					</div>
-
-					<div class="control-group">
-						<label class="control-label">Nama</label>
-						<div class="controls">
-							<input type="text" name="nama" class="input-medium" value="<?= $r->nama ?>">
-						</div>
-					</div>
-
-					<div class="control-group">
-						<label class="control-label">No. HP</label>
-						<div class="controls">
-							<input type="text" name="no_hp" class="input-medium" value="<?= $r->no_hp ?>">
-						</div>
-					</div>
-
-					<div class="control-group">
-						<label class="control-label">Email</label>
-						<div class="controls">
-							<input type="email" name="email" class="input-medium" value="<?= $r->email ?>">
-						</div>
-					</div>
-
-					<div class="control-group">
-						<label class="control-label">Alamat</label>
-						<div class="controls">
-							<textarea name="alamat" class="input-xlarge"><?= $r->alamat ?></textarea>
-						</div>
-					</div>
-
-					<div class="control-group">
-						<div class="controls">
-							<button type="submit" name="ubah" class="btn btn-primary">
-								<i class="icon-ok icon-white"></i> Ubah
-							</button>
-						</div>
-					</div>
+					<input type="text" disabled class="input-small" placeholder="NIM" value="<?= $r->nim ?>">
+					<input type="text" name="nama" class="input-medium" placeholder="Nama Mahasiswa" value="<?= $r->nama ?>">
+					<input type="text" name="no_hp" class="input-medium" placeholder="No. HP" value="<?= $r->no_hp ?>">
+					<input type="email" name="email" class="input-medium" placeholder="Email" value="<?= $r->email ?>">
+					<input type="text" name="alamat" class="input-large" placeholder="Alamat" value="<?= $r->alamat ?>">
+					<button type="submit" name="ubah" class="btn btn-primary"><i class="icon-ok icon-white"></i>
+						Ubah</button>
 				</form>
 
 				<?php
 				unset($r, $abc);
+			} else if ($_GET['page'] == 'data-server') {
+				?>
+					<legend>Daftar Data Server</legend>
+					<form name="form1" method="post" action="proses.php" class="form-inline">
+						<input type="hidden" name="aksi" value="sinkronisasi" />
+						<button type="submit" name="sinkronisasi" class="btn btn-primary"
+							onclick="return confirm('Apakah Anda akan melakukan proses sinkronisasi data?')"><i
+								class="icon-ok icon-white"></i> Sinkronisasi Data</button>
+					</form>
 
-			} elseif ($page == 'data-server') { ?>
-
-				<legend>Daftar Data Server</legend>
-				<form name="form1" method="post" action="proses.php" class="form-inline">
-					<input type="hidden" name="aksi" value="sinkronisasi" />
-					<button type="submit" name="sinkronisasi" class="btn btn-primary"
-						onclick="return confirm('Apakah Anda akan melakukan proses sinkronisasi data?')">
-						<i class="icon-refresh icon-white"></i> Sinkronisasi Data
-					</button>
-				</form>
-
-				<table class="table table-hover">
-					<tr>
-						<th width='15%'>No</th>
-						<th width='10%'>NIM</th>
-						<th width='30%'>Nama</th>
-						<th width='15%'>No. HP</th>
-						<th width='15%'>Email</th>
-						<th width='10%'>Alamat</th>
-						<th width='10%'>Aksi</th>
-					</tr>
+					<table class="table table-hover">
+						<tr>
+							<th width='5%'>No</th>
+							<th width='10%'>NIM</th>
+							<th width='20%'>Nama</th>
+							<th width='15%'>No. HP</th>
+							<th width='20%'>Email</th>
+							<th width='25%'>Alamat</th>
+							<th width='5%'>Ubah</th>
+							<th width='5%'>Hapus</th>
+						</tr>
 					<?php
 					$no = 1;
 					$data = $abc->tampil_semua_data();
 					foreach ($data as $r) { ?>
-						<tr>
-							<td><?= $no ?></td>
-							<td><?= $r->nim ?></td>
-							<td><?= $r->nama ?></td>
-							<td><?= $r->no_hp ?></td>
-							<td><?= $r->email ?></td>
-							<td><?= $r->alamat ?></td>
-							<td><a href="?page=ubah&nim=<?= $r->nim ?>" class="btn btn-success"><i class="icon-pencil"></i></a>
-							</td>
-							<td><a href="proses.php?aksi=hapus&nim=<?= $r->nim ?>" class="btn btn-danger"
-									onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')"><i
-										class="icon-remove"></i></a></td>
-						</tr>
+							<tr>
+								<td><?= $no ?></td>
+								<td><?= $r->nim ?></td>
+								<td><?= $r->nama ?></td>
+								<td><?= $r->no_hp ?></td>
+								<td><?= $r->email ?></td>
+								<td><?= $r->alamat ?></td>
+								<td><a href="?page=ubah&nim=<?= $r->nim ?>" role="button" class="btn btn-success"><i
+											class="icon-pencil"></i></a></td>
+								<td><a href="proses.php?aksi=hapus&nim=<?= $r->nim ?>" role="button" class="btn btn-danger"
+										onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')"><i
+											class="icon-remove"></i></a></td>
+							</tr>
 						<?php $no++;
 					}
-					unset($data, $r, $no, $abc);
-					?>
-				</table>
+					unset($data, $r, $no, $abc); ?>
+					</table>
 
-			<?php } elseif ($page == 'data-client') { ?>
-
-				<legend>Daftar Data Client</legend>
-				<table class="table table-hover">
-					<tr>
-						<th>No</th>
-						<th>NIM</th>
-						<th>Nama</th>
-						<th>No. HP</th>
-						<th>Email</th>
-						<th>Alamat</th>
-					</tr>
+			<?php } else if ($_GET['page'] == 'data-client') { ?>
+						<legend>Daftar Data Client</legend>
+						<table class="table table-hover">
+							<tr>
+								<th width='5%'>No</th>
+								<th width='10%'>NIM</th>
+								<th width='20%'>Nama</th>
+								<th width='15%'>No. HP</th>
+								<th width='20%'>Email</th>
+								<th width='30%'>Alamat</th>
+							</tr>
 					<?php
 					$no = 1;
 					$data = $abc->daftar_mhs_client();
 					foreach ($data as $r) { ?>
-						<tr>
-							<td><?= $no ?></td>
-							<td><?= $r['nim'] ?></td>
-							<td><?= $r['nama'] ?></td>
-							<td><?= $r['no_hp'] ?></td>
-							<td><?= $r['email'] ?></td>
-							<td><?= $r['alamat'] ?></td>
-						</tr>
+								<tr>
+									<td><?= $no ?></td>
+									<td><?= $r['nim'] ?></td>
+									<td><?= $r['nama'] ?></td>
+									<td><?= $r['no_hp'] ?></td>
+									<td><?= $r['email'] ?></td>
+									<td><?= $r['alamat'] ?></td>
+								</tr>
 						<?php $no++;
 					}
-					unset($data, $r, $no, $abc);
-					?>
-				</table>
+					unset($data, $r, $no, $abc); ?>
+						</table>
 
 			<?php } else { ?>
-				<legend>Home</legend>
-				<p>
-					Aplikasi sederhana ini menggunakan konsep <strong>RESTful Web Service</strong> dengan format data
-					<code>JSON (JavaScript Object Notation)</code> untuk komunikasi antara client dan server.
-				</p>
-			<?php } ?>
-
-		</fieldset>
-	</div>
+						<legend>Home</legend>
+						Aplikasi sederhana ini menggunakan RESTful dengan format data JSON (JavaScript Object Notation).
+					</fieldset>
+				</div>
+	<?php } ?>
 
 	<script src="js/jquery.js"></script>
 	<script src="js/bootstrap.js"></script>

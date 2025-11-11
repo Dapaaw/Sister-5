@@ -12,7 +12,6 @@ if ($_POST['aksi'] == 'tambah') {
 	);
 	$abc->tambah_data($data);
 	header('location:index.php?page=data-server');
-
 } else if ($_POST['aksi'] == 'ubah') {
 	$data = array(
 		"nim" => $_POST['nim'],
@@ -24,7 +23,6 @@ if ($_POST['aksi'] == 'tambah') {
 	);
 	$abc->ubah_data($data);
 	header('location:index.php?page=data-server');
-
 } else if ($_GET['aksi'] == 'hapus') {
 	$data = array(
 		"nim" => $_GET['nim'],
@@ -32,11 +30,9 @@ if ($_POST['aksi'] == 'tambah') {
 	);
 	$abc->hapus_data($data);
 	header('location:index.php?page=data-server');
-
 } else if ($_POST['aksi'] == 'sinkronisasi') {
 	$abc->sinkronisasi();
 	header('location:index.php?page=data-client');
 }
-
 unset($data, $abc);
 ?>

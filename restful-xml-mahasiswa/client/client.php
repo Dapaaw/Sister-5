@@ -1,5 +1,5 @@
 <?php
-error_reporting(1); // error ditampilkan
+error_reporting(1); 
 class Client
 {
 	private $host = "localhost";
@@ -7,7 +7,6 @@ class Client
 	private $conn;
 	private $url;
 
-	// koneksi ke database mysql di client
 	private $driver = "mysql";
 	private $user = "root";
 	private $password = "";
@@ -17,7 +16,6 @@ class Client
 	{
 		$this->url = $url;
 
-		// koneksi database lokal client
 		try {
 			if ($this->driver == 'mysql') {
 				$this->conn = new PDO(
@@ -37,7 +35,6 @@ class Client
 		unset($url);
 	}
 
-	// membersihkan data
 	public function filter($data)
 	{
 		$data = preg_replace('/[^a-zA-Z0-9]/', '', $data);
@@ -45,7 +42,6 @@ class Client
 		unset($data);
 	}
 
-	// ambil semua data dari server (XML)
 	public function tampil_semua_data()
 	{
 		$client = curl_init($this->url);
@@ -57,7 +53,6 @@ class Client
 		unset($data, $client, $response);
 	}
 
-	// ambil data berdasarkan NIM
 	public function tampil_data($nim)
 	{
 		$nim = $this->filter($nim);
@@ -70,7 +65,6 @@ class Client
 		unset($nim, $client, $response, $data);
 	}
 
-	// tambah data ke server
 	public function tambah_data($data)
 	{
 		$data_xml = "
@@ -95,7 +89,6 @@ class Client
 		unset($data_xml, $c, $response);
 	}
 
-	// ubah data ke server
 	public function ubah_data($data)
 	{
 		$data_xml = "
@@ -120,7 +113,6 @@ class Client
 		unset($data_xml, $c, $response);
 	}
 
-	// hapus data di server
 	public function hapus_data($nim)
 	{
 		$nim = $this->filter($nim);
@@ -142,15 +134,12 @@ class Client
 		unset($nim, $data, $c, $response);
 	}
 
-	// sinkronisasi data server → client
 	public function sinkronisasi()
 	{
-		// hapus semua data lama di client
 		$query = $this->conn->prepare("DELETE FROM mahasiswa");
 		$query->execute();
 		$query->closeCursor();
 
-		// ambil data dari server
 		$client = curl_init($this->url);
 		curl_setopt($client, CURLOPT_RETURNTRANSFER, 1);
 		$response = curl_exec($client);
@@ -175,7 +164,6 @@ class Client
 		unset($client, $response, $data, $r);
 	}
 
-	// tampilkan data dari database lokal client
 	public function daftar_mhs_client()
 	{
 		$query = $this->conn->prepare("SELECT nim,nama,no_hp,email,alamat FROM mahasiswa ORDER BY nim");
@@ -192,9 +180,7 @@ class Client
 	}
 }
 
-// URL server RESTful XML
 $url = 'http://192.168.56.2/restful-xml-mahasiswa/server/server.php';
 
-// buat objek baru dari class Client
 $abc = new Client($url);
 ?>
